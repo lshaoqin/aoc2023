@@ -1,4 +1,4 @@
-f = open("day1.1/input.txt", "r")
+f = open("day1/input.txt", "r")
 lines = f.readlines()
 
 def extract_value(line):
