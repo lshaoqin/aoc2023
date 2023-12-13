@@ -18,7 +18,6 @@ for line in lines:
     solution = ""
     for key in line[1]:
         solution += "#" * key + "."
-    solution = solution[:-1]
     dp = [0 for _ in range(len(solution))]
     dp.insert(0, 1)
 
@@ -27,29 +26,36 @@ for line in lines:
             for index in range(len(solution) -1, -1, -1):
                 key = solution[index]
                 if key == "#":
-                    dp[index+1] = dp[index]
+                    dp[index+1] += dp[index]
+                    dp[index] = 0
                 if key == ".":
                     dp[index+1] = 0
-            dp[0] = 0
+                    dp[index] = 0
+
         if char == ".":
             for index in range(len(solution) -1, -1, -1):
                 key = solution[index]
                 if key == "#":
                     dp[index+1] = 0
+                    if index != 0 and solution[index-1] == "#":
+                        dp[index] = 0
                 if key == ".":
                     dp[index+1] += dp[index]
+                    dp[index] = 0
+
         if char == "?":
             for index in range(len(solution) -1, -1, -1):
                 key = solution[index]
                 if key == "#":
                     dp[index+1] += dp[index]
-                    if solution[index-1] == ".":
-                        dp[index] += dp[index]
-                if key == ".":
-                    dp[index+1] = dp[index]
-                    if index > 0:
+                    if index != 0 and solution[index-1] == "#":
                         dp[index] = 0
-    total += dp[-1]
+
+                if key == ".":
+                    dp[index+1] += dp[index]
+                    dp[index] = 0
+
+    total += dp[-1] + dp[-2]
 
 print(total)
 
