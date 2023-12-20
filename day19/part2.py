@@ -24,7 +24,6 @@ while len(queue) > 0:
         sum = 1
         for key in parts:
             sum *= parts[key][1] - parts[key][0] + 1
-        print(parts, sum)
         total += sum
         continue
     if curr == "R":
